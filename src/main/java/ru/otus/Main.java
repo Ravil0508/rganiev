@@ -1,24 +1,22 @@
 package ru.otus;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import ru.otus.model.Question;
+import ru.otus.service.ProcessQuestionService;
 import ru.otus.service.QuestionsCSVServiceImpl;
 import ru.otus.service.QuestionsFileService;
 import java.util.List;
 
+@PropertySource("classpath:application.properties")
+@Configuration
+@ComponentScan
 public class Main {
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
-        QuestionsFileService service = context.getBean(QuestionsCSVServiceImpl.class);
-        List<Question> questions = service.getQuestions();
-
-        for (Question question : questions) {
-            System.out.println(question.getQuestionText());
-            for (String option : question.getOptions()) {
-                System.out.println(" - " + option);
-            }
-            System.out.println("Сorrect answer: " + question.getCorrectAnswer());
-            System.out.println();
-        }
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
+        ProcessQuestionService service = context.getBean(ProcessQuestionService.class);
+        service.runTest();
     }
 }
