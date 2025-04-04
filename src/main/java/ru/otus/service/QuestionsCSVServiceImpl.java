@@ -1,18 +1,21 @@
 package ru.otus.service;
 
 import com.opencsv.CSVReader;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Service;
 import ru.otus.model.Question;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class QuestionsCSVServiceImpl implements QuestionsFileService {
 
     private String path;
 
-    public QuestionsCSVServiceImpl(String path) {
+    public QuestionsCSVServiceImpl(@Value("${csvfile.path}") String path) {
         this.path = path;
     }
 
