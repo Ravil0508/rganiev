@@ -3,14 +3,23 @@ package ru.otus.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import ru.otus.conf.LocalConfiguration;
 import ru.otus.model.Question;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 @DisplayName("Тесты сервиса QuestionsCSVServiceImpl")
 class QuestionsCSVServiceImplTest {
+
+    @Mock
+    private LocalConfiguration localConfiguration;
 
     private QuestionsCSVServiceImpl service;
     private QuestionsCSVServiceImpl emptyService;
@@ -18,9 +27,14 @@ class QuestionsCSVServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        service = new QuestionsCSVServiceImpl("test-questions.csv");
-        emptyService = new QuestionsCSVServiceImpl("empty-questions.csv");
-        invalidService = new QuestionsCSVServiceImpl("non-existent-file.csv");
+        when(localConfiguration.getLocale()).thenReturn("test");
+        service = new QuestionsCSVServiceImpl(localConfiguration, "test-questions", "csv");
+
+        when(localConfiguration.getLocale()).thenReturn("empty");
+        emptyService = new QuestionsCSVServiceImpl(localConfiguration, "empty-questions", "csv");
+
+        when(localConfiguration.getLocale()).thenReturn("invalid");
+        invalidService = new QuestionsCSVServiceImpl(localConfiguration, "non-existent-file", "csv");
     }
 
     @Test
@@ -111,9 +125,10 @@ class QuestionsCSVServiceImplTest {
     @Test
     @DisplayName("Должен создать сервис с корректным путем к файлу")
     void shouldCreateServiceWithCorrectPath() {
-        String path = "custom-questions_en.csv";
-
-        QuestionsCSVServiceImpl customService = new QuestionsCSVServiceImpl(path);
+        when(localConfiguration.getLocale()).thenReturn("en");
+        
+        QuestionsCSVServiceImpl customService = new QuestionsCSVServiceImpl(
+            localConfiguration, "custom-questions_", "csv");
 
         assertThat(customService).isNotNull();
     }
