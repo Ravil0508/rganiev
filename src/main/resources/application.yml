@@ -1,0 +1,10 @@
+spring:
+  messages:
+    basename: i18n/messages
+app:
+  locale: ru
+csvfile:
+  base-name: questions
+  suffix: csv
+passing:
+  grade: 4

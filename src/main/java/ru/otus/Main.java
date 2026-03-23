@@ -1,5 +1,8 @@
 package ru.otus;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -10,12 +13,10 @@ import ru.otus.service.QuestionsCSVServiceImpl;
 import ru.otus.service.QuestionsFileService;
 import java.util.List;
 
-@PropertySource("classpath:application.properties")
-@Configuration
-@ComponentScan
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
+        ApplicationContext context = SpringApplication.run(Main.class, args);
         ProcessQuestionService service = context.getBean(ProcessQuestionService.class);
         service.runTest();
     }

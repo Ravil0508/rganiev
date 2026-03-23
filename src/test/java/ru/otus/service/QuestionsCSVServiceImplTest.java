@@ -111,7 +111,7 @@ class QuestionsCSVServiceImplTest {
     @Test
     @DisplayName("Должен создать сервис с корректным путем к файлу")
     void shouldCreateServiceWithCorrectPath() {
-        String path = "custom-questions.csv";
+        String path = "custom-questions_en.csv";
 
         QuestionsCSVServiceImpl customService = new QuestionsCSVServiceImpl(path);
 
