@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.otus.model.Question;
 
-import java.io.InputStreamReader;
 import java.util.List;
-import java.util.Scanner;
 
 @Service
 public class ProcessQuestionServiceImpl implements ProcessQuestionService{
@@ -24,12 +22,11 @@ public class ProcessQuestionServiceImpl implements ProcessQuestionService{
     }
 
     public void runTest() {
-        Scanner scanner = new Scanner(System.in);
         List<Question> questions = fileService.getQuestions();
         String fio = "";
         printService.render("Enter your first and last name");
-        fio = scanner.nextLine();
-        printService.render("Hello " + fio + "! Answer the following questions (you need to respond by typing your chosen answer in the console):");
+        fio = printService.readLine();
+        printService.render("Hello " + fio + "! Answer the following questions (To select an answer, enter the word corresponding to the option):");
         int trueAnswerCount = 0;
 
         for (Question question : questions) {
@@ -39,7 +36,7 @@ public class ProcessQuestionServiceImpl implements ProcessQuestionService{
                 printService.render(count + " - " + option);
                 count++;
             }
-            String ourAnswer = scanner.nextLine();
+            String ourAnswer = printService.readLine();
             trueAnswerCount = ourAnswer.equals(question.getCorrectAnswer()) ? trueAnswerCount + 1 : trueAnswerCount;
         }
         if(trueAnswerCount >= passingGrade)
