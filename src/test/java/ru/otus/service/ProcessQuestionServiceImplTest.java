@@ -14,8 +14,8 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("Тесты сервиса ProcessQuestionService")
-class ProcessQuestionServiceTest {
+@DisplayName("Тесты сервиса ProcessQuestionServiceImpl")
+class ProcessQuestionServiceImplTest {
 
     @Mock
     private QuestionsFileService questionsFileService;
