@@ -10,6 +10,7 @@ import ru.otus.conf.LocalConfiguration;
 import ru.otus.model.Question;
 
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -27,7 +28,7 @@ public class QuestionsCSVServiceImpl implements QuestionsFileService {
     public List<Question> getQuestions() {
         List<Question> questions = new ArrayList<>();
 
-        try (CSVReader reader = new CSVReader(new InputStreamReader(new ClassPathResource(path).getInputStream()))) {
+        try (CSVReader reader = new CSVReader(new InputStreamReader(new ClassPathResource(path).getInputStream(), StandardCharsets.UTF_8))) {
             String[] line;
 
             reader.readNext();
